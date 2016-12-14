@@ -1,0 +1,52 @@
+.first {
+  /*background: cornflowerblue;*/
+  transition: width ease-in-out 500ms;
+
+}
+
+.second {
+  background: mediumpurple;
+}
+
+.third {
+  background: darkturquoise;
+}
+
+.widget {
+  /*width:100%;*/
+}
+.widget > div {
+  /*width:100%;*/
+  height:40px;
+  background: magenta;
+  transition: width ease-in-out 500ms;
+  border:solid 1px;
+}
+.widget + .widget {
+  /*margin-top: 10px;*/
+}
+
+.widgets {
+  padding: 1rem;
+  background: greenyellow;
+}
+.drop-area {
+  min-height:40px;
+}
+
+.column-wrapper {
+  background: lightblue;
+}
+
+.row-controls {
+  position: absolute;
+  right: 0;
+  width: 20px;
+}
+
+.row-controls button {
+  float:left;
+  width:20px;
+  height:20px;
+  padding:0;
+}

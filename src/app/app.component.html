@@ -1,0 +1,47 @@
+<h1>
+  {{title}}
+</h1>
+<div class="container-fluid">
+  Available widgets
+  <div class="widgets row" [dragula]='"first-bag"'>
+    <div class="widget" ngClass="{{'col-xl-'+ widget.xl}}" *ngFor="let widget of widgets; let i = index;">
+      <div>{{i}}
+        <span *ngIf="edit" (click)="widget.sm = widget.sm + 1">+</span>
+        <span *ngIf="edit" (click)="widget.sm = widget.sm - 1">-</span>
+      </div>
+    </div>
+  </div>
+</div>
+<!--<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-4 first" [dragula]='"first-bag"'>
+      One of three columns
+    </div>
+    <div class="col-sm-4 second" [dragula]='"first-bag"'>
+      One of three columns
+    </div>
+    <div class="col-sm-4 third" [dragula]='"first-bag"'>
+      One of three columns
+    </div>
+  </div>
+</div>-->
+<button class="btn btn-secondary" (click)="editLayout()">Edit layout</button>
+<div class="container-fluid">
+  <div class="row column-wrapper" *ngFor="let row of cards">
+    <div class="first" ngClass="{{'col-xl-' + column.xl }}" *ngFor="let column of row; let i = index;" >
+      <!--    <div class="first" ngClass="{{'col-xl-' + 12/row.length }}" *ngFor="let column of row; let i = index;" >-->
+      <div>{{i+1}} of {{row.length}} columns</div>
+      <span *ngIf="edit" (click)="grow(column,row)">+</span>
+      <span *ngIf="edit" (click)="shrink(column,row);">-</span>
+      {{column.xl}}
+      <div class="row drop-area" [dragula]='"first-bag"'></div>
+    </div>
+    <div class="row-controls">
+      <button *ngIf="edit" class="btn btn-secondary" (click)="addColumn(row)">+</button>
+      <button *ngIf="edit" class="btn btn-secondary" (click)="removeColumn(row)">-</button>
+    </div>
+  </div>
+</div>
+
+<button *ngIf="edit" class="btn btn-secondary" (click)="addRow()">Add row</button>
+<button *ngIf="edit" class="btn btn-secondary" (click)="removeRow()">Remove row</button>
