@@ -27,21 +27,21 @@
 </div>-->
 <button class="btn btn-secondary" (click)="editLayout()">Edit layout</button>
 <div class="container-fluid">
-  <div class="row column-wrapper" *ngFor="let row of cards">
-    <div class="first" ngClass="{{'col-xl-' + column.xl }}" *ngFor="let column of row; let i = index;" >
-      <!--    <div class="first" ngClass="{{'col-xl-' + 12/row.length }}" *ngFor="let column of row; let i = index;" >-->
-      <div>{{i+1}} of {{row.length}} columns</div>
-      <span *ngIf="edit" (click)="grow(column,row)">+</span>
-      <span *ngIf="edit" (click)="shrink(column,row);">-</span>
+  <div class="row column-wrapper" *ngFor="let columns of cards">
+    <div class="first" ngClass="{{'col-xl-' + column.xl }}" *ngFor="let column of columns; let i = index;" >
+      <!--    <div class="first" ngClass="{{'col-xl-' + 12/columns.length }}" *ngFor="let column of columns; let i = index;" >-->
+      <div>{{i+1}} of {{columns.length}} columns</div>
+      <span *ngIf="edit" (click)="grow(column,columns, i)">+</span>
+      <span *ngIf="edit" (click)="shrink(column,columns, i);">-</span>
       {{column.xl}}
       <div class="row drop-area" [dragula]='"first-bag"'></div>
     </div>
     <div class="row-controls">
-      <button *ngIf="edit" class="btn btn-secondary" (click)="addColumn(row)">+</button>
-      <button *ngIf="edit" class="btn btn-secondary" (click)="removeColumn(row)">-</button>
+      <button *ngIf="edit" class="btn btn-secondary" (click)="addColumn(columns)">+</button>
+      <button *ngIf="edit" class="btn btn-secondary" (click)="removeColumn(columns)">-</button>
     </div>
   </div>
 </div>
 
-<button *ngIf="edit" class="btn btn-secondary" (click)="addRow()">Add row</button>
-<button *ngIf="edit" class="btn btn-secondary" (click)="removeRow()">Remove row</button>
+<button *ngIf="edit" class="btn btn-secondary" (click)="addRow()">Add columns</button>
+<button *ngIf="edit" class="btn btn-secondary" (click)="removeRow()">Remove columns</button>
