@@ -1,7 +1,7 @@
 <h1>
   {{title}}  {{innerWidth}}
 </h1>
-<div class="container-fluid">
+<!--<div class="container-fluid">
   Available widgets
   <div class="widgets row" [dragula]='"first-bag"'>
     <div class="widget" ngClass="{{'col-xl-'+ widget.xl}}" *ngFor="let widget of widgets; let i = index;">
@@ -11,7 +11,9 @@
       </div>
     </div>
   </div>
-</div>
+</div>-->
+<div class="col-xs-12" [dragula]='"first-bag"'><bg-widget></bg-widget></div>
+
 
 <button class="btn btn-secondary" (click)="editLayout()">Edit layout</button>
 <div class="container-fluid">
@@ -19,7 +21,8 @@
     <div class="first" ngClass="{{'col-xl-' + column.xl}} {{edit ? 'edit-column':''}}" *ngFor="let column of columns; let i = index;" [enableGhostResize]="true" mwlResizable
          [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
          (resizeEnd)="onResizeEnd($event,column,columns, i)">
-      <div class="card">
+      <bg-column></bg-column>
+      <!--<div class="card">
         <div class="card-header handle">
           Widget
           <button type="button" class="close float-xs-right" aria-label="Close" (click)="removeColumn(columns,i);">
@@ -31,10 +34,10 @@
           <span *ngIf="edit" (click)="grow(column,columns, i)">+</span>
           <span *ngIf="edit" (click)="shrink(column,columns, i);">-</span>
           <div class="row drop-area" [dragula]='"first-bag"'>
-            <bg-column></bg-column>
+
           </div>
         </div>
-      </div>
+      </div>-->
     </div>
     <div *ngIf="columns.length === 0 && edit">
       <button class="btn btn-secondary" (click)="addColumn(columns)">Add content</button>
