@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {Widget} from './widget';
 import {DragulaService} from "ng2-dragula";
+import {ResizeEvent} from 'angular-resizable-element';
+import {ChangeDetectorRef} from '@angular/core'
 
 @Component({
   selector: 'app-root',
@@ -9,15 +11,30 @@ import {DragulaService} from "ng2-dragula";
 })
 export class AppComponent {
   title = 'app works!';
+  innerWidth:number = window.innerWidth;
 
-  constructor(private dragulaService: DragulaService) {
+  constructor(private dragulaService: DragulaService, private cdr: ChangeDetectorRef){
+
+    let getWindow = () => {
+      return window.innerWidth;
+    };
+
+    window.onresize = () => {
+      this.innerWidth = getWindow();
+      this.cdr.detectChanges(); //running change detection manually
+    };
+
     dragulaService.setOptions('second-bag', {
       moves: function (el, container, handle) {
-        return handle.className === 'handle';
+        return handle.className === 'card-header handle';
       }
     });
   }
 
+  onResizeEnd(event: ResizeEvent, column, columns, columnIndex): void {
+    console.log('Element was resized', event, Math.round((event.rectangle.width/this.innerWidth)*12));
+    column.xl = Math.round((event.rectangle.width/this.innerWidth)*12);
+  }
   public widgets: Array<Widget> = [
     {
       xl:12,
@@ -67,19 +84,19 @@ export class AppComponent {
     columns.push({xl:4});
   };
 
-  public removeColumn = function(columns){
-    columns.splice(columns.length-1,1);
+  public removeColumn = function(columns, columnIndex){
+    columns.splice(columnIndex,1);
   };
 
   public getRowWidth = function(columns:Array<any>){
-    console.log(columns);
+    //console.log(columns);
     let sum = 0;
     for(let i = 0;i < columns.length; i++){
-      console.log(columns[i]);
+      //console.log(columns[i]);
       sum += columns[i].xl;
     }
 
-    console.log(sum);
+    //console.log(sum);
     return sum;
     //console.log(columns.reduce((previous, current) => previous.xl+current.xl, {xl:0}));
   };
