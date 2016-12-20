@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {Widget} from './widget';
+import {DragulaService} from "ng2-dragula";
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,14 @@ import {Widget} from './widget';
 })
 export class AppComponent {
   title = 'app works!';
+
+  constructor(private dragulaService: DragulaService) {
+    dragulaService.setOptions('second-bag', {
+      moves: function (el, container, handle) {
+        return handle.className === 'handle';
+      }
+    });
+  }
 
   public widgets: Array<Widget> = [
     {
@@ -37,8 +46,8 @@ export class AppComponent {
     }
   ];
 
-  public columns = [{xl:4},{xl:4}];
-  public cards = [this.columns];
+  public columns = [];
+  public rows = [this.columns];
   public edit:boolean = false;
   public autoFillColumns:boolean = true;
 
@@ -47,11 +56,11 @@ export class AppComponent {
   };
 
   public addRow = function(){
-    this.cards.push([{xl:12}]);
+    this.rows.push([]);
   };
 
   public removeRow = function(){
-    this.cards.splice(this.cards.length-1,1);
+    this.rows.splice(this.rows.length-1,1);
   };
 
   public addColumn = function(columns){
@@ -95,7 +104,7 @@ export class AppComponent {
       column.xl = column.xl - 1;
       if(columnsWidth <= 12 && columnIndex+1 < columns.length && this.autoFillColumns){
         columns[columnIndex+1].xl = columns[columnIndex+1].xl + 1;
-      } else if(this.autoFillColumns && columns.length > 1) {
+      } else if(this.autoFillColumns && columns.length > 1 && columnsWidth <= 12) {
         columns[columnIndex-1].xl = columns[columnIndex-1].xl + 1;
       }
     }

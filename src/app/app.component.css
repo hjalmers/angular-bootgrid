@@ -50,3 +50,21 @@
   height:20px;
   padding:0;
 }
+.edit-row {
+  //display: table;
+  //width: 100%;
+}
+
+.edit-column {
+  //float: none;
+  //display: table-cell;
+}
+
+.edit-column-max {
+  position: absolute;
+  height: 100%;
+  width: 25%;
+  display: block;
+  top: 0;
+  right: 0;
+}
