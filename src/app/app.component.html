@@ -18,7 +18,8 @@
   <div class="row column-wrapper" ngClass="{{edit ? 'edit-row':''}}" *ngFor="let columns of rows" [dragula]='"second-bag"' style="position: relative;">
     <div class="first" ngClass="{{'col-xl-' + column.xl}} {{edit ? 'edit-column':''}}" *ngFor="let column of columns; let i = index;" [enableGhostResize]="true" mwlResizable
          [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
-         (resizeEnd)="onResizeEnd($event,column,columns, i)">
+         (resizeEnd)="onResizeEnd($event,column,columns, i)"
+         (resizeStart)="onResizeStart($event,column,columns, i)">
       <div class="card">
         <div class="card-header handle">
           Widget

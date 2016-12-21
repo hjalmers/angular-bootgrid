@@ -7,7 +7,7 @@ import {ChangeDetectorRef} from '@angular/core'
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   title = 'app works!';
@@ -30,10 +30,20 @@ export class AppComponent {
       }
     });
   }
-
+  resizeStart:number;
+  onResizeStart(event: ResizeEvent, column, columns, columnIndex): void {
+    console.log('Element is resized');
+    this.resizeStart = column.xl;
+  }
   onResizeEnd(event: ResizeEvent, column, columns, columnIndex): void {
     console.log('Element was resized', event, Math.round((event.rectangle.width/this.innerWidth)*12));
-    column.xl = Math.round((event.rectangle.width/this.innerWidth)*12);
+    let columnsWidth = this.getRowWidth(columns);
+    let proposedWidth = Math.round((event.rectangle.width/this.innerWidth)*12);
+    console.log(columnsWidth - this.resizeStart + proposedWidth);
+    if(columnsWidth - this.resizeStart + proposedWidth <= 12) {
+      column.xl = Math.round((event.rectangle.width/this.innerWidth)*12);
+    }
+
   }
   public widgets: Array<Widget> = [
     {
