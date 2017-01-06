@@ -8,13 +8,15 @@ import {DragulaModule} from 'ng2-dragula/ng2-dragula';
 import {ResizableModule} from 'angular-resizable-element';
 import { BgColumnComponent } from './bg-column/bg-column.component';
 import { BgWidgetComponent } from './bg-widget/bg-widget.component';
+import { BgContainerComponent } from './bg-container/bg-container.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     BgColumnComponent,
-    BgWidgetComponent
+    BgWidgetComponent,
+    BgContainerComponent
   ],
   imports: [
     BrowserModule,

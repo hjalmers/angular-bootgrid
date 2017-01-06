@@ -13,42 +13,8 @@
   </div>
 </div>
 
-<button class="btn btn-secondary" (click)="editLayout()">Edit layout</button>
+
 <div class="container-fluid">
-  <div class="row column-wrapper" ngClass="{{edit ? 'edit-row':''}}" *ngFor="let columns of rows" [dragula]='"second-bag"' style="position: relative;">
-    <div class="first" ngClass="{{'col-xl-' + column.xl}} {{edit ? 'edit-column':''}}" *ngFor="let column of columns; let i = index;" [enableGhostResize]="true" mwlResizable
-         [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
-         (resizeEnd)="onResizeEnd($event,column,columns, i)"
-         (resizeStart)="onResizeStart($event,column,columns, i)">
-      <div class="card">
-        <div class="card-header handle">
-          Widget
-          <button type="button" class="close float-xs-right" aria-label="Close" (click)="removeColumn(columns,i);">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="card-block">
-          <div>{{i+1}} of {{columns.length}} columns,  xl size: {{column.xl}}</div>
-          <span *ngIf="edit" (click)="grow(column,columns, i)">+</span>
-          <span *ngIf="edit" (click)="shrink(column,columns, i);">-</span>
-          <div class="row drop-area" [dragula]='"first-bag"'>
-            <bg-column></bg-column>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div *ngIf="columns.length === 0 && edit">
-      <button class="btn btn-secondary" (click)="addColumn(columns)">Add content</button>
-    </div>
-    <div *ngIf="columns.length > 0 && edit && getRowWidth(columns) < 12" style="height: calc(100% - 10px);%;position: absolute;right: 0;" ngClass="{{('col-xl-' + (12-getRowWidth(columns)))}} {{(getRowWidth(columns) === 12 ? 'edit-column-max':'')}}">
-      <button class="btn btn-secondary" (click)="addColumn(columns)" style="width: 100%;height: 100%;">Add content</button>
-    </div>
-    <!--<div class="row-controls">
-      <button *ngIf="edit" class="btn btn-secondary" (click)="addColumn(columns)">+</button>
-      <button *ngIf="edit" class="btn btn-secondary" (click)="removeColumn(columns)">-</button>
-    </div>-->
-  </div>
+<bg-container></bg-container>
 </div>
 
-<button *ngIf="edit" class="btn btn-secondary" (click)="addRow()">Add row</button>
-<button *ngIf="edit" class="btn btn-secondary" (click)="removeRow()">Remove row</button>

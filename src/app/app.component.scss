@@ -28,14 +28,14 @@
 
 .widgets {
   padding: 1rem;
-  background: greenyellow;
+  //background: greenyellow;
 }
 .drop-area {
   min-height:40px;
 }
 
 .column-wrapper {
-  background: lightblue;
+  //background: lightblue;
 }
 
 .row-controls {
@@ -67,4 +67,9 @@
   display: block;
   top: 0;
   right: 0;
+}
+
+.bg-fixed-height {
+  max-height: 450px;
+  overflow: auto;
 }
