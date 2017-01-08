@@ -19,7 +19,7 @@
       "mobile": false,
       "styles": [
         "../node_modules/dragula/dist/dragula.css",
-        "styles.css"
+        "styles.scss"
       ],
       "scripts": [],
       "environments": {
