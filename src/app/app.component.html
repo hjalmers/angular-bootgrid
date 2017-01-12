@@ -16,7 +16,7 @@
 <button class="btn btn-secondary" (click)="editLayout()">Edit layout</button>
 <div class="col-xl-12">
   <div class="row column-wrapper" ngClass="{{edit ? 'edit-row':''}}" *ngFor="let columns of rows" [dragula]='"second-bag"' style="position: relative;">
-    <div class="first" attr.data-index="{{index}}" attr.data-org-index="{{column.order}}" ngClass="{{'col-xs-' + (!column.xs ? 12:column.xs)}} {{'col-sm-' + (!column.sm ? 0:column.sm)}} {{'col-md-' + (!column.md ? 0:column.md)}} {{'col-lg-' + (!column.lg ? 0:column.lg)}} {{'col-xl-' + (!column.xl ? 0:column.xl)}} {{edit ? 'edit-column':''}}" *ngFor="let column of columns | orderBy:currentSize; let i = index;" [enableGhostResize]="true" mwlResizable
+    <div class="first" [attr.data-grid-item-id]="column.order" ngClass="{{'col-xs-' + (!column.xs ? 12:column.xs)}} {{'col-sm-' + (!column.sm ? 0:column.sm)}} {{'col-md-' + (!column.md ? 0:column.md)}} {{'col-lg-' + (!column.lg ? 0:column.lg)}} {{'col-xl-' + (!column.xl ? 0:column.xl)}} {{edit ? 'edit-column':''}}" *ngFor="let column of columns | orderBy:currentSize; let i = index;" [enableGhostResize]="true" mwlResizable
          [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
          (resizeEnd)="onResizeEnd($event,column,columns, column.order)"
          (resizeStart)="onResizeStart($event,column,columns, column.order)">

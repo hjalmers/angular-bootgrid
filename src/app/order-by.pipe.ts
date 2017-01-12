@@ -34,8 +34,15 @@ export class OrderByPipe implements PipeTransform {
     console.log(currentSize);
     //items.sort(this.getOrderForSize(currentSize));
 
-    items = items.sort(this.getOrderForSize(currentSize));
-    console.log(items);
+    //items = items.sort(this.getOrderForSize(currentSize));
+
+
+    /*console.log('before',items);
+    // loop through items and set new order
+    for(let i = 0;i < items.length; i ++) {
+      items[i][currentSize+'Order'] = i;
+    }
+    console.log('after',items);*/
     return items;
   }
 

@@ -89,7 +89,7 @@ export class AppComponent {
     }
   ];
 
-  public columns = [{xl:4, componentSelector:'random-widget',order:0,xlOrder:1,mdOrder:0},{xl:6, componentSelector:'random-widget',order:1,xlOrder:0,mdOrder:1}];
+  public columns = [{xl:4, componentSelector:'random-widget',gridItemId:0,order:0,xlOrder:1,mdOrder:0},{xl:6, componentSelector:'random-widget',gridItemId:1,extra:'second',order:1,xlOrder:0,mdOrder:1}];
   public rows = [this.columns];
   public edit:boolean = false;
   public autoFillColumns:boolean = true;
@@ -182,17 +182,71 @@ export class AppComponent {
     let index = this.getElementIndex(e);
     //let item = this.columns[index];
     const sizeOrder = this.currentSize +'Order';
-    const startPos = e.getAttribute('data-org-index');
+    //const startPos = e.getAttribute('data-org-index');
+    const gridItemId = e.getAttribute('data-grid-item-id');
+    console.log(gridItemId);
     const endPos = index;
     //console.log(endPos,e.getAttribute('data-index'));
-    this.columns[startPos][sizeOrder] = endPos;
+    const gridItem = this.getGridItemById(gridItemId);
+    console.log(endPos,gridItem[sizeOrder])
+    this.updateOrder(endPos,gridItem[sizeOrder],sizeOrder);
+    //this.columns[startPos][sizeOrder] = endPos;
     //console.log(e.getAttribute('data-index'),e.getAttribute('data-org-index'),index, item)
-
   }
   private getElementIndex(el: any) {
     //console.log(el,el.children);
     //console.log('index',[].slice.call(el.children).indexOf(el.children[1]));
     return [].slice.call(el.parentElement.children).indexOf(el);
+  }
+  private updateOrder = function(newPosition:number,oldPosition:number,size){
+    let increase = newPosition > oldPosition;
+    console.log(increase,newPosition,oldPosition);
+    for (let i = 0; i < this.columns.length; i ++) {
+      if (i === oldPosition){
+        this.columns[i][size] = newPosition;
+        console.log('set new');
+      } else if(increase && i > oldPosition && i <= newPosition) {
+        console.log('decrease');
+        this.columns[i][size] = i-1;
+      } else if(!increase && i <= newPosition) {
+        console.log('increase');
+        this.columns[i][size] = i+1;
+      }
+    }
+    this.columns.sort(this.getOrderForSize(size));
+    console.log(this.columns);
+
+  };
+  private getOrderForSize(size) {
+    return (a,b)=> {
+      if (a[size]  < b[size] )
+        return -1;
+      if (a[size]  > b[size] )
+        return 1;
+      return 0;
+      //console.log(this.currentSize);
+      /*let orderA = a[size+'Order'] ? a[size+'Order']:a.order;
+       let orderB = b[size+'Order'] ? b[size+'Order']:b.order;
+
+       //console.log(a,orderA,a[size+'Order'],b,orderB,b[size+'Order']);
+       console.log(a.order,a[size+'Order'] ? a[size+'Order']:a.order);
+       console.log(b.order,b[size+'Order'] ? b[size+'Order']:b.order);
+       if (a[size+'Order'] ? a[size+'Order']:a.order < b[size+'Order'] ? b[size+'Order']:b.order) {
+       return -1;
+       }
+       if (a[size+'Order'] ? a[size+'Order']:a.order > b[size+'Order'] ? b[size+'Order']:b.order) {
+       return 1;
+       }
+       return 0;*/
+    };
+  };
+
+  private getGridItemById = function(id:number) {
+    for (let i = 0; i < this.columns.length;i++) {
+      if(this.columns[i].gridItemId = id) {
+        return this.columns[i];
+      }
+    }
   }
 
 }
