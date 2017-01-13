@@ -35,7 +35,10 @@
 }
 
 .column-wrapper {
-  background: lightblue;
+  //background: lightblue;
+  margin-left: -30px;
+  margin-right: -30px;
+
 }
 
 .row-controls {
@@ -67,4 +70,9 @@
   display: block;
   top: 0;
   right: 0;
+}
+
+.card-block {
+  height: 240px;
+  overflow: auto;
 }

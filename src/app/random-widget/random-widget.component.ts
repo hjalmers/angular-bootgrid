@@ -19,7 +19,7 @@ export class RandomWidgetComponent implements OnInit {
   };
 
   randomHeight = function() {
-    return Math.floor(Math.random()*100);
+    return Math.floor(Math.random()*500);
   };
   ngOnInit() {
   }

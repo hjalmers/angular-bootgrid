@@ -14,6 +14,7 @@ export class AppComponent {
   title = 'app works!';
   innerWidth:number = window.innerWidth;
   currentSize:string;
+  sizes = ['xs','sm','md','lg','xl'];
 
   constructor(private dragulaService: DragulaService, private cdr: ChangeDetectorRef){
 
@@ -21,9 +22,14 @@ export class AppComponent {
       return window.innerWidth;
     };
 
+    this.innerWidth = getWindow();
+    this.currentSize = this.getCurrentSize();
+
     window.onresize = () => {
       this.innerWidth = getWindow();
       this.currentSize = this.getCurrentSize();
+      let size = this.columns[0][this.currentSize]
+      this.columns.sort(this.getOrderForSize(this.currentSize));
       this.cdr.detectChanges(); //running change detection manually
     };
 
@@ -89,7 +95,7 @@ export class AppComponent {
     }
   ];
 
-  public columns = [{xl:4, componentSelector:'random-widget',gridItemId:0,order:0,xlOrder:1,mdOrder:0},{xl:6, componentSelector:'random-widget',gridItemId:1,extra:'second',order:1,xlOrder:0,mdOrder:1}];
+  public columns = [{xl:3, componentSelector:'random-widget',extra:'first',gridItemId:0,order:0,xlOrder:0,mdOrder:0},{xl:3, componentSelector:'random-widget',gridItemId:1,extra:'second',order:1,xlOrder:1,mdOrder:1},{xl:3, componentSelector:'random-widget',gridItemId:2,extra:'third',order:2,xlOrder:2,mdOrder:2},{xl:3, componentSelector:'random-widget',gridItemId:3,extra:'forth',order:3,xlOrder:3,mdOrder:3}];
   public rows = [this.columns];
   public edit:boolean = false;
   public autoFillColumns:boolean = true;
@@ -183,13 +189,15 @@ export class AppComponent {
     //let item = this.columns[index];
     const sizeOrder = this.currentSize +'Order';
     //const startPos = e.getAttribute('data-org-index');
-    const gridItemId = e.getAttribute('data-grid-item-id');
+    console.log(e);
+    let gridItemId = e.getAttribute('data-grid-item-id');
     console.log(gridItemId);
     const endPos = index;
     //console.log(endPos,e.getAttribute('data-index'));
     const gridItem = this.getGridItemById(gridItemId);
-    console.log(endPos,gridItem[sizeOrder])
-    this.updateOrder(endPos,gridItem[sizeOrder],sizeOrder);
+    console.log(gridItem);
+    //console.log(endPos,gridItem[sizeOrder])
+    this.updateOrder(endPos,gridItem,sizeOrder);
     //this.columns[startPos][sizeOrder] = endPos;
     //console.log(e.getAttribute('data-index'),e.getAttribute('data-org-index'),index, item)
   }
@@ -198,30 +206,56 @@ export class AppComponent {
     //console.log('index',[].slice.call(el.children).indexOf(el.children[1]));
     return [].slice.call(el.parentElement.children).indexOf(el);
   }
-  private updateOrder = function(newPosition:number,oldPosition:number,size){
+  private updateOrder = function(newPosition:number,movedItem,size){
+    let oldPosition:number = movedItem[size];
     let increase = newPosition > oldPosition;
-    console.log(increase,newPosition,oldPosition);
+    let diff = oldPosition - newPosition;
+    console.log(this.columns);
+    console.log('moved right? ' + increase,'new pos: ' + newPosition,'old pos: ' + oldPosition);
+
+    // if we have no position for current size...
+    if(!oldPosition) {
+
+      // ...loop through all items and set current position as default for this size
+      for (let i = 0; i < this.columns.length; i ++) {
+        this.columns[i][size] = i;
+      }
+      oldPosition = movedItem[size];
+    }
+
     for (let i = 0; i < this.columns.length; i ++) {
-      if (i === oldPosition){
+      const currentPos = this.columns[i][size];
+
+      console.log(currentPos);
+      // if this is the moved item...
+      if (currentPos === oldPosition){
+        // ...update current size position with new position
         this.columns[i][size] = newPosition;
-        console.log('set new');
-      } else if(increase && i > oldPosition && i <= newPosition) {
-        console.log('decrease');
-        this.columns[i][size] = i-1;
-      } else if(!increase && i <= newPosition) {
-        console.log('increase');
-        this.columns[i][size] = i+1;
+        console.log('this one moved: '+this.columns[i].extra);
+      }
+
+      // ...else if item moved right and this item has position between moved item's current and final position...
+      else if(increase && currentPos > oldPosition && currentPos <= newPosition) {
+        // ...move this item to the left to make room
+        console.log('this one was pushed left: '+this.columns[i].extra);
+        this.columns[i][size] = currentPos-1;
+      }
+      // ...else if item moved left and this item has position between moved item's current and final position...
+      else if(!increase && currentPos >= newPosition && currentPos < oldPosition) {
+        // ...move this item to the right to make room
+        console.log('this one was pushed right 1: '+this.columns[i].extra);
+        this.columns[i][size] = currentPos+1;
       }
     }
-    this.columns.sort(this.getOrderForSize(size));
+
     console.log(this.columns);
 
   };
   private getOrderForSize(size) {
     return (a,b)=> {
-      if (a[size]  < b[size] )
+      if (a[size+'Order']  < b[size+'Order'] )
         return -1;
-      if (a[size]  > b[size] )
+      if (a[size+'Order']  > b[size+'Order'] )
         return 1;
       return 0;
       //console.log(this.currentSize);
@@ -241,9 +275,16 @@ export class AppComponent {
     };
   };
 
+  private getAvailabelSize = function() {
+
+  };
+
   private getGridItemById = function(id:number) {
+    console.log(id,this.columns);
     for (let i = 0; i < this.columns.length;i++) {
-      if(this.columns[i].gridItemId = id) {
+      console.log(this.columns[i].order);
+      if(this.columns[i].order == id) {
+        console.log('yeah');
         return this.columns[i];
       }
     }

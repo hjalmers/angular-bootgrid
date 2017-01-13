@@ -1,5 +1,5 @@
 <h1>
-  Bootgrid demo  {{innerWidth}}
+  Bootgrid demo  {{innerWidth}} {{currentSize}}
 </h1>
 <!--<div class="container-fluid">
   Available widgets
@@ -16,7 +16,7 @@
 <button class="btn btn-secondary" (click)="editLayout()">Edit layout</button>
 <div class="col-xl-12">
   <div class="row column-wrapper" ngClass="{{edit ? 'edit-row':''}}" *ngFor="let columns of rows" [dragula]='"second-bag"' style="position: relative;">
-    <div class="first" [attr.data-grid-item-id]="column.order" ngClass="{{'col-xs-' + (!column.xs ? 12:column.xs)}} {{'col-sm-' + (!column.sm ? 0:column.sm)}} {{'col-md-' + (!column.md ? 0:column.md)}} {{'col-lg-' + (!column.lg ? 0:column.lg)}} {{'col-xl-' + (!column.xl ? 0:column.xl)}} {{edit ? 'edit-column':''}}" *ngFor="let column of columns | orderBy:currentSize; let i = index;" [enableGhostResize]="true" mwlResizable
+    <div class="first" [attr.data-grid-item-id]="column.order" ngClass="{{'col-xs-' + (!column.xs ? 12:column.xs)}} {{'col-sm-' + (!column.sm ? 0:column.sm)}} {{'col-md-' + (!column.md ? 0:column.md)}} {{'col-lg-' + (!column.lg ? 0:column.lg)}} {{'col-xl-' + (!column.xl ? 0:column.xl)}} {{edit ? 'edit-column':''}}" *ngFor="let column of columns; let i = index;" [enableGhostResize]="true" mwlResizable
          [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
          (resizeEnd)="onResizeEnd($event,column,columns, column.order)"
          (resizeStart)="onResizeStart($event,column,columns, column.order)">
@@ -40,18 +40,16 @@
         </div>
       </div>
     </div>
-    <div *ngIf="columns.length === 0 && edit">
-      <button class="btn btn-secondary" (click)="addColumn(columns)">Add content</button>
-    </div>
-    <div *ngIf="columns.length > 0 && edit" style="height: calc(100% - 10px);%;right: 0;" ngClass="{{('col-xl-' + (12-getRowWidth(columns)))}} {{(getRowWidth(columns) === 12 ? 'edit-column-max':'')}}">
-      <button class="btn btn-secondary" (click)="addColumn(columns)" style="width: 100%;height: 100%;">Add content</button>
-    </div>
+
     <!--<div class="row-controls">
       <button *ngIf="edit" class="btn btn-secondary" (click)="addColumn(columns)">+</button>
       <button *ngIf="edit" class="btn btn-secondary" (click)="removeColumn(columns)">-</button>
     </div>-->
   </div>
+  <div *ngIf="edit" class="row">
+    <button class="btn btn-secondary" (click)="addColumn(columns)">Add content</button>
+  </div>
+  <!--<div *ngIf="columns.length > 0 && edit" style="height: calc(100% - 10px);%;right: 0;" ngClass="{{('col-xl-' + (12-getRowWidth(columns)))}} {{(getRowWidth(columns) === 12 ? 'edit-column-max':'')}}">
+    <button class="btn btn-secondary" (click)="addColumn(columns)" style="width: 100%;height: 100%;">Add content</button>
+  </div>-->
 </div>
-
-<button *ngIf="edit" class="btn btn-secondary" (click)="addRow()">Add row</button>
-<button *ngIf="edit" class="btn btn-secondary" (click)="removeRow()">Remove row</button>
