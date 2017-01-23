@@ -114,6 +114,7 @@ export class AppComponent {
 
   public addColumn = function(columns){
     columns.push({xl:4, componentSelector:'random-widget',order:columns.length,xsOrder:columns.length,smOrder:columns.length,mdOrder:columns.length,lgOrder:columns.length,xlOrder:columns.length});
+    this.columns.sort(this.getOrderForSize(this.currentSize));
   };
 
   public removeColumn = function(columns, columnIndex){
