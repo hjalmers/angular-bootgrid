@@ -10,6 +10,8 @@ import { BootgridModule } from "../bootgrid/bootgrid.module";
 import { CardComponent } from './card/card.component';
 import { ExamplesComponent } from './examples/examples.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ExemplifyModule } from "angular-exemplify";
+
 
 
 @NgModule({
@@ -25,7 +27,8 @@ import { AppRoutingModule } from './app-routing.module';
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    BootgridModule
+    BootgridModule,
+    ExemplifyModule
   ],
   providers: [],
   entryComponents: [RandomWidgetComponent],

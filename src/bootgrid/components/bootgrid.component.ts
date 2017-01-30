@@ -8,9 +8,17 @@ import {ResizeEvent} from 'angular-resizable-element';
 
 @Component({
   selector: 'bootgrid',
-  templateUrl: 'bootgrid.component.html',
-  styleUrls: ['bootgrid.component.scss'],
-  encapsulation:ViewEncapsulation.None
+  encapsulation:ViewEncapsulation.None,
+  template: `<div class="column-wrapper row" ngClass="{{edit ? 'edit-row':''}}" [dragula]="'bg-grid'">
+  <div *ngFor="let item of items; let i = index;" class="mb-4" [attr.data-grid-item-id]="item.order" ngClass="{{'col-' + (!item.xs ? 12:item.xs)}} {{'col-sm-' + (!item.sm ? 0:item.sm)}} {{'col-md-' + (!item.md ? 0:item.md)}} {{'col-lg-' + (!item.lg ? 0:item.lg)}} {{'col-xl-' + (!item.xl ? 0:item.xl)}} {{edit ? 'edit-column':''}}" mwlResizable
+       (resizing)="onResize($event,item)">
+    <template [ngTemplateOutlet]="template" [ngOutletContext]="{
+        item: item
+      }">
+    </template>
+    <div class="bg-resize-handle" mwlResizeHandle [resizeEdges]="{right: true}"></div>
+  </div>
+</div>`
 })
 export class BootgridComponent implements OnChanges {
   @ContentChild(TemplateRef) template:TemplateRef<any>;

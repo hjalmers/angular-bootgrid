@@ -2,17 +2,16 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "",
-    "declaration": false,
+    "declaration": true,
     "emitBOM": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "lib": ["dom", "es6"],
-    "mapRoot": "./",
     "listEmittedFiles": true,
     "module": "commonjs",
     "moduleResolution": "node",
     "newLine": "lf",
-    "outDir": "../dist/out-tsc",
+    "outDir": "../",
     "pretty": true,
     "rootDir": "./",
     "sourceMap": true,
@@ -20,5 +19,12 @@
     "typeRoots": [
       "../node_modules/@types"
     ]
+  },
+  "files": [
+    "index.ts"
+  ],
+  "angularCompilerOptions": {
+    "genDir": "../",
+    "strictMetadataEmit": true
   }
 }

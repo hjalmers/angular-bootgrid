@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BootgridComponent } from './bootgrid.component';
+import { BootgridComponent } from './components/bootgrid.component';
 import { ResizableModule } from "angular-resizable-element";
 import { DragulaModule } from "ng2-dragula";
-import { BgContentComponent } from "./bg-content/bg-content.component";
+import { BgContentComponent } from "./components/bg-content.component";
 
 @NgModule({
   imports: [
