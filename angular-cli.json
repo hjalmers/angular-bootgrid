@@ -19,9 +19,13 @@
       "mobile": false,
       "styles": [
         "../node_modules/dragula/dist/dragula.css",
+        "../node_modules/prismjs/themes/prism-coy.css",
+        "../node_modules/angular-exemplify/exemplify/css/exemplify.css",
         "styles.scss"
       ],
-      "scripts": [],
+      "scripts": [
+        "../node_modules/prismjs/prism.js"
+      ],
       "environments": {
         "source": "environments/environment.ts",
         "dev": "environments/environment.ts",
@@ -42,7 +46,7 @@
     }
   },
   "defaults": {
-    "styleExt": "scss",
+    "styleExt": "css",
     "prefixInterfaces": false,
     "inline": {
       "style": false,

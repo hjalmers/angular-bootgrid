@@ -4,29 +4,34 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import {DragulaModule} from 'ng2-dragula/ng2-dragula';
-import {ResizableModule} from 'angular-resizable-element';
-import { BgColumnComponent } from './bg-column/bg-column.component';
-import { BgWidgetComponent } from './bg-widget/bg-widget.component';
-import { BgContainerComponent } from './bg-container/bg-container.component';
+import { RandomWidgetComponent } from './random-widget/random-widget.component';
+import { BasicComponent } from './basic/basic.component';
+import { BootgridModule } from "../bootgrid/bootgrid.module";
+import { CardComponent } from './card/card.component';
+import { ExamplesComponent } from './examples/examples.component';
+import { AppRoutingModule } from './app-routing.module';
+import { ExemplifyModule } from "angular-exemplify";
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    BgColumnComponent,
-    BgWidgetComponent,
-    BgContainerComponent
+    RandomWidgetComponent,
+    BasicComponent,
+    CardComponent,
+    ExamplesComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    DragulaModule,
-    ResizableModule
+    AppRoutingModule,
+    BootgridModule,
+    ExemplifyModule
   ],
   providers: [],
-  entryComponents: [],
+  entryComponents: [RandomWidgetComponent],
   exports: [],
   bootstrap: [AppComponent]
 })

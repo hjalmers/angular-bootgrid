@@ -1,0 +1,25 @@
+@import "node_modules/bootstrap/scss/variables.scss";
+
+.basic-box {
+  background: $purple;
+  width:100%;
+  height:240px;
+  color: #ffffff;
+  padding: $spacer;
+  overflow: auto;
+}
+
+.edit-row .bg-resize-handle {
+  transform: scale3d(1,1,1);
+}
+
+.bg-resize-handle {
+  height: calc(100%);
+  position: absolute;
+  right: 7px;
+  top: 0;
+  cursor: ew-resize;
+  transition: all 200ms ease-out;
+  transform: scale3d(1, 0, 0);
+  border-right: solid 8px $pink;
+}

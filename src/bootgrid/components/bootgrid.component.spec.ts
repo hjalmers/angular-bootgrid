@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { BgWidgetComponent } from './bg-widget.component';
+import { BootgridComponent } from './bootgrid.component';
 
-describe('BgWidgetComponent', () => {
-  let component: BgWidgetComponent;
-  let fixture: ComponentFixture<BgWidgetComponent>;
+describe('BootgridComponent', () => {
+  let component: BootgridComponent;
+  let fixture: ComponentFixture<BootgridComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BgWidgetComponent ]
+      declarations: [ BootgridComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BgWidgetComponent);
+    fixture = TestBed.createComponent(BootgridComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

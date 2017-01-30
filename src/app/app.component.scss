@@ -1,3 +1,5 @@
+@import "../../node_modules/bootstrap/scss/variables.scss";
+
 .first {
   /*background: cornflowerblue;*/
   //transition: width ease-in-out 500ms;
@@ -28,7 +30,7 @@
 
 .widgets {
   padding: 1rem;
-  //background: greenyellow;
+  background: greenyellow;
 }
 .drop-area {
   min-height:40px;
@@ -36,6 +38,9 @@
 
 .column-wrapper {
   //background: lightblue;
+  margin-left: -30px;
+  margin-right: -30px;
+
 }
 
 .row-controls {
@@ -61,7 +66,7 @@
 }
 
 .edit-column-max {
-  position: absolute;
+  //position: absolute;
   height: 100%;
   width: 25%;
   display: block;
@@ -69,7 +74,13 @@
   right: 0;
 }
 
-.bg-fixed-height {
-  max-height: 450px;
+.card-block {
+  height: 240px;
   overflow: auto;
+}
+
+
+
+.bg-handle {
+  cursor: move;
 }

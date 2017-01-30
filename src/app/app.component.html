@@ -1,20 +1,33 @@
-<h1>
-  {{title}}  {{innerWidth}}
+<h1 class="my-4">
+  Bootgrid demo  {{innerWidth}} {{currentSize}}
 </h1>
-<div class="container-fluid">
-  Available widgets
-  <div class="widgets row" [dragula]='"first-bag"'>
-    <div class="widget" ngClass="{{'col-xl-'+ widget.xl}}" *ngFor="let widget of widgets; let i = index;">
-      <div>{{i}}
-        <span *ngIf="edit" (click)="widget.sm = widget.sm + 1">+</span>
-        <span *ngIf="edit" (click)="widget.sm = widget.sm - 1">-</span>
+<!--<button class="btn btn-secondary mb-4" (click)="editLayout()">Edit layout</button>
+<div class="col-xl-12">
+  <div class="row column-wrapper" ngClass="{{edit ? 'edit-row':''}}" *ngFor="let columns of rows" [dragula]='"second-bag"' style="position: relative;">
+    <div class="first mb-4" [attr.data-grid-item-id]="column.order" ngClass="{{'col-' + (!column.xs ? 12:column.xs)}} {{'col-sm-' + (!column.sm ? 0:column.sm)}} {{'col-md-' + (!column.md ? 0:column.md)}} {{'col-lg-' + (!column.lg ? 0:column.lg)}} {{'col-xl-' + (!column.xl ? 0:column.xl)}} {{edit ? 'edit-column':''}}" *ngFor="let column of columns; let i = index;"   mwlResizable
+         (resizeStart)="onResizeStart($event,column,columns, column.order)"
+         (resizing)="onResizeEnd($event,column,columns, column.order)">
+      <div class="card">
+        <div class="card-header" ngClass="{{edit ? 'handle':''}}">
+          Widget
+          <button *ngIf="edit" type="button" class="close float-right" aria-label="Close" (click)="removeColumn(columns,i);">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="card-block">
+          <span *ngIf="edit" class="btn btn-primary btn-sm" (click)="grow(column,columns, column.order)">+</span>
+          <span *ngIf="edit" class="btn btn-primary btn-sm" (click)="shrink(column,columns, column.order);">-</span>
+          <div>{{i+1}} of {{columns.length}} columns,  column: {{column | json}}</div>
+          <app-bg-content [insertedComponent]="column.componentSelector" [availableComponents]="availableComponents"></app-bg-content>
+        </div>
+        <div class="resize-side-handle" mwlResizeHandle [resizeEdges]="{right: true}"></div>
       </div>
     </div>
   </div>
-</div>
-
-
-<div class="container-fluid">
-<bg-container></bg-container>
-</div>
-
+  <div *ngIf="edit" class="row">
+    <button class="btn btn-secondary" (click)="addColumn(columns)">Add content</button>
+  </div>
+</div>-->
+<!--<app-card></app-card>
+<app-basic></app-basic>-->
+<router-outlet></router-outlet>
