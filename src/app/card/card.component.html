@@ -1,0 +1,20 @@
+<button class="btn btn-secondary mb-4" (click)="myGrid.editLayout()">Edit layout</button>
+<bootgrid #myGrid [items]="items">
+  <template let-item="item" let-index="i">
+    <div class="card">
+      <div class="card-header" ngClass="{{myGrid.edit ? 'handle':''}}">
+        Widget
+        <button *ngIf="myGrid.edit" type="button" class="close float-right" aria-label="Close" (click)="myGrid.deleteItem(item);">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="card-block">
+        <span *ngIf="myGrid.edit" class="btn btn-primary btn-sm" (click)="myGrid.grow(item,myGrid.items, item.order)">+</span>
+        <span *ngIf="myGrid.edit" class="btn btn-primary btn-sm" (click)="myGrid.shrink(item,myGrid.items, item.order);">-</span>
+        <div>{{index+1}} of {{myGrid.items.length}} items,  column: {{item | json}}</div>
+        <bg-content [insertedComponent]="item.componentSelector" [availableComponents]="availableComponents"></bg-content>
+      </div>
+    </div>
+  </template>
+</bootgrid>
+<button *ngIf="myGrid.edit" class="btn btn-secondary" (click)="myGrid.addItem()">Add content</button>

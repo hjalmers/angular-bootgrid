@@ -1,0 +1,57 @@
+<!--<div *ngFor="let item of listItems" (click)="pressed(item)">
+  <template
+    [ngTemplateOutlet]="template"
+    [ngOutletContext]="{
+        item: item
+      }">
+  </template>
+</div>-->
+<div class="column-wrapper row" ngClass="{{edit ? 'edit-row':''}}" [dragula]='"second-bag"'>
+  <div *ngFor="let item of items; let i = index;" class="mb-4" [attr.data-grid-item-id]="item.order" ngClass="{{'col-' + (!item.xs ? 12:item.xs)}} {{'col-sm-' + (!item.sm ? 0:item.sm)}} {{'col-md-' + (!item.md ? 0:item.md)}} {{'col-lg-' + (!item.lg ? 0:item.lg)}} {{'col-xl-' + (!item.xl ? 0:item.xl)}} {{edit ? 'edit-column':''}}"    mwlResizable
+       (resizeStart)="onResizeStart($event,item,items, item.order)"
+       (resizing)="onResizeEnd($event,item,items, item.order)">
+    <template [ngTemplateOutlet]="template" [ngOutletContext]="{
+        item: item
+      }">
+    </template>
+    <!--<div class="card">
+      <div class="card-header" ngClass="{{edit ? 'handle':''}}">
+        Widget
+        <button *ngIf="edit" type="button" class="close float-right" aria-label="Close" (click)="removeColumn(i);">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="card-block">
+        <span *ngIf="edit" class="btn btn-primary btn-sm" (click)="grow(item,items, item.order)">+</span>
+        <span *ngIf="edit" class="btn btn-primary btn-sm" (click)="shrink(item,items, item.order);">-</span>
+        <div>{{i+1}} of {{items.length}} items,  column: {{item | json}}</div>
+        <bg-content [insertedComponent]="item.componentSelector" [availableComponents]="availableComponents"></bg-content>
+      </div>
+    </div>-->
+    <div class="resize-side-handle" mwlResizeHandle [resizeEdges]="{right: true}"></div>
+  </div>
+</div>
+
+<!--<div class="column-wrapper row" ngClass="{{edit ? 'edit-row':''}}" *ngFor="let columns of rows" [dragula]='"second-bag"'>
+  <div class="mb-4" [attr.data-grid-item-id]="column.order" ngClass="{{'col-' + (!column.xs ? 12:column.xs)}} {{'col-sm-' + (!column.sm ? 0:column.sm)}} {{'col-md-' + (!column.md ? 0:column.md)}} {{'col-lg-' + (!column.lg ? 0:column.lg)}} {{'col-xl-' + (!column.xl ? 0:column.xl)}} {{edit ? 'edit-column':''}}" *ngFor="let column of columns; let i = index;"   mwlResizable
+       (resizeStart)="onResizeStart($event,column,columns, column.order)"
+       (resizing)="onResizeEnd($event,column,columns, column.order)">
+    <!--<div class="card">
+      <div class="card-header" ngClass="{{edit ? 'handle':''}}">
+        Widget
+        <button *ngIf="edit" type="button" class="close float-right" aria-label="Close" (click)="removeColumn(columns,i);">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="card-block">
+        <span *ngIf="edit" class="btn btn-primary btn-sm" (click)="grow(column,columns, column.order)">+</span>
+        <span *ngIf="edit" class="btn btn-primary btn-sm" (click)="shrink(column,columns, column.order);">-</span>
+        <div>{{i+1}} of {{columns.length}} columns,  column: {{column | json}}</div>
+        <bg-content [insertedComponent]="column.componentSelector" [availableComponents]="availableComponents"></bg-content>
+      </div>
+      <div class="resize-side-handle" mwlResizeHandle [resizeEdges]="{right: true}"></div>
+    </div>
+    <template [ngTemplateOutlet]="template" [ngOutletContext]="item"></template>
+  </div>
+</div>
+-->

@@ -1,0 +1,12 @@
+<button class="btn btn-secondary mb-4" (click)="myGrid.editLayout()">Edit layout</button>
+<bootgrid #myGrid [items]="items">
+  <template let-item="item" let-index="i">
+    <div ngClass="{{myGrid.edit ? 'handle':''}}" style="background: red; width: 100%;height: 100%;">
+        Widget
+        <button *ngIf="myGrid.edit" type="button" class="close float-right" aria-label="Close" (click)="myGrid.deleteItem(item);">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+  </template>
+</bootgrid>
+<button *ngIf="myGrid.edit" class="btn btn-secondary" (click)="myGrid.addItem()">Add content</button>

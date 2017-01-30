@@ -4,9 +4,9 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'app-bg-content',
+  selector: 'bg-content',
   template: '<b>Inserted Component:</b>',
-  styleUrls: ['./bg-content.component.css']
+  styleUrls: ['bg-content.component.css']
 })
 export class BgContentComponent implements OnChanges {
   @Input() insertedComponent: Type<any>;

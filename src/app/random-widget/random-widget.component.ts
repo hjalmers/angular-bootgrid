@@ -10,6 +10,7 @@ export class RandomWidgetComponent implements OnInit {
   color:string;
   height:number;
   constructor() {
+    console.log('generated');
     this.color = this.randomColor();
     this.height = this.randomHeight();
   }

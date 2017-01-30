@@ -9,8 +9,10 @@ import {ResizableModule} from 'angular-resizable-element';
 import { BgColumnComponent } from './bg-column/bg-column.component';
 import { BgWidgetComponent } from './bg-widget/bg-widget.component';
 import { RandomWidgetComponent } from './random-widget/random-widget.component';
-import { BgContentComponent } from './bg-content/bg-content.component';
 import { OrderByPipe } from './order-by.pipe';
+import { BasicComponent } from './basic/basic.component';
+import { BootgridModule } from "../bootgrid/bootgrid.module";
+import { CardComponent } from './card/card.component';
 
 
 @NgModule({
@@ -19,15 +21,17 @@ import { OrderByPipe } from './order-by.pipe';
     BgColumnComponent,
     BgWidgetComponent,
     RandomWidgetComponent,
-    BgContentComponent,
-    OrderByPipe
+    OrderByPipe,
+    BasicComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     DragulaModule,
-    ResizableModule
+    ResizableModule,
+    BootgridModule
   ],
   providers: [],
   entryComponents: [RandomWidgetComponent],
