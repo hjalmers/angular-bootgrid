@@ -1,0 +1,22 @@
+@import "node_modules/bootstrap/scss/variables.scss";
+
+
+.card-block {
+  height:260px;
+  overflow: auto;
+}
+.edit-row .bg-resize-handle {
+  transform: scale3d(1,1,1);
+}
+
+.bg-resize-handle {
+  height: calc(100% - 2px);
+  position: absolute;
+  right: 16px;
+  top: 1px;
+  cursor: ew-resize;
+  transition: all 200ms ease-out;
+  transform: scale3d(1, 0, 0);
+  border-radius: 0 3px 3px 0;
+  border-right: solid 15px $blue;
+}

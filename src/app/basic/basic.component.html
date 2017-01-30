@@ -1,11 +1,16 @@
 <button class="btn btn-secondary mb-4" (click)="myGrid.editLayout()">Edit layout</button>
 <bootgrid #myGrid [items]="items">
-  <template let-item="item" let-index="i">
-    <div ngClass="{{myGrid.edit ? 'handle':''}}" style="background: red; width: 100%;height: 100%;">
-        Widget
-        <button *ngIf="myGrid.edit" type="button" class="close float-right" aria-label="Close" (click)="myGrid.deleteItem(item);">
-          <span aria-hidden="true">&times;</span>
-        </button>
+  <template let-item="item">
+    <div class="basic-box" [ngClass]="{'bg-handle':myGrid.edit}">
+      <div class="row">
+        <h3 class="col-12">Item: {{item.order}}</h3>
+        <div class="col-6">Size xs: {{item.xs}}</div><div class="col-6">Order xs: {{item.xsOrder}}</div>
+        <div class="col-6">Size sm: {{item.sm}}</div><div class="col-6">Order sm: {{item.smOrder}}</div>
+        <div class="col-6">Size md: {{item.md}}</div><div class="col-6">Order md: {{item.mdOrder}}</div>
+        <div class="col-6">Size lg: {{item.lg}}</div><div class="col-6">Order lg: {{item.lgOrder}}</div>
+        <div class="col-6">Size xl: {{item.xl}}</div><div class="col-6">Order xl: {{item.xlOrder}}</div>
+      </div>
+      <button *ngIf="myGrid.edit" class="btn btn-danger btn-sm float-right mt-3" aria-label="Remove" (click)="myGrid.deleteItem(item);">Remove</button>
     </div>
   </template>
 </bootgrid>
