@@ -46,7 +46,7 @@ export class BootgridComponent implements OnChanges {
 
     dragulaService.setOptions('bg-grid', {
       moves: function (el, container, handle) {
-        return handle.className.indexOf('bg-handle') !== -1 && !(handle instanceof SVGElement);
+        return !(handle instanceof SVGElement) && handle.className.indexOf('bg-handle') !== -1;
       }
     });
     dragulaService.drop.subscribe((value) => {

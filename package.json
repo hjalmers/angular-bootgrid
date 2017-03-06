@@ -21,7 +21,7 @@
     "postpublish": "npm run -s clean",
     "e2e": "protractor"
   },
-  "private": true,
+  "private": false,
   "main": "index.js",
   "dependencies": {
     "@angular/common": "^2.3.1",
