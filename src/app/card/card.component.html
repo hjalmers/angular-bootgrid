@@ -1,4 +1,4 @@
-<div class="mb-4" exemplify="basicExample" [source]="'child'" [angularInputs]="['ngClass','insertedComponent','availableComponents']" [navStyle]="'tabs'" [externalSources]="[{
+<div class="mb-4" exemplify="basicExample" [context]="this" [source]="'child'" [escapeStrings]="['insertedComponent','availableComponents']" [navStyle]="'tabs'" [externalSources]="[{
     name:'app.module.ts',
     src:'https://raw.githubusercontent.com/hjalmers/angular-bootgrid/master/src/app/app.module.ts'
   },{
@@ -10,7 +10,7 @@
   }]">
   <button class="btn btn-secondary mb-4" (click)="myGrid.editLayout()">Edit layout</button>
   <bootgrid #myGrid [items]="items">
-    <template let-item="item" let-index="i">
+    <ng-template let-item="item" let-index="i">
       <div class="card">
         <div class="card-header" [ngClass]="{'bg-handle':myGrid.edit}">
           Item {{item.order + 1}} of {{myGrid.items.length}}
@@ -28,7 +28,7 @@
           <bg-content [insertedComponent]="item.componentSelector" [availableComponents]="availableComponents"></bg-content>
         </div>
       </div>
-    </template>
+    </ng-template>
   </bootgrid>
-  <button *ngIf="myGrid.edit" class="btn btn-secondary" (click)="myGrid.addItem()">Add content</button>
+  <button *ngIf="myGrid.edit" class="btn btn-secondary mb-4" (click)="myGrid.addItem()">Add content</button>
 </div>

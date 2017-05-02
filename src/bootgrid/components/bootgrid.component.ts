@@ -9,13 +9,13 @@ import {ResizeEvent} from 'angular-resizable-element';
 @Component({
   selector: 'bootgrid',
   encapsulation:ViewEncapsulation.None,
-  template: `<div class="column-wrapper row" ngClass="{{edit ? 'edit-row':''}}" [dragula]="'bg-grid'">
+  template: `<div class="column-wrapper row" ngClass="{{edit ? 'edit-row':''}}" [dragula]="bagId">
   <div *ngFor="let item of items; let i = index;" class="mb-4" [attr.data-grid-item-id]="item.order" ngClass="{{'col-' + (!item.xs ? 12:item.xs)}} {{'col-sm-' + (!item.sm ? 0:item.sm)}} {{'col-md-' + (!item.md ? 0:item.md)}} {{'col-lg-' + (!item.lg ? 0:item.lg)}} {{'col-xl-' + (!item.xl ? 0:item.xl)}} {{edit ? 'edit-column':''}}" mwlResizable
        (resizing)="onResize($event,item)">
-    <template [ngTemplateOutlet]="template" [ngOutletContext]="{
+    <ng-template [ngTemplateOutlet]="template" [ngOutletContext]="{
         item: item
       }">
-    </template>
+    </ng-template>
     <div class="bg-resize-handle" mwlResizeHandle [resizeEdges]="{right: true}"></div>
   </div>
 </div>`
@@ -26,6 +26,7 @@ export class BootgridComponent implements OnChanges {
 
   private innerWidth:number = window.innerWidth;
   private currentSize:string;
+  public bagId:any;
 
   constructor(private dragulaService: DragulaService, private cdr: ChangeDetectorRef){
 
@@ -35,6 +36,7 @@ export class BootgridComponent implements OnChanges {
 
     this.innerWidth = getWindow();
     this.currentSize = this.getCurrentSize();
+    this.bagId = this.generateId();
 
     window.onresize = () => {
       this.innerWidth = getWindow();
@@ -44,7 +46,7 @@ export class BootgridComponent implements OnChanges {
       this.cdr.detectChanges(); //running change detection manually
     };
 
-    dragulaService.setOptions('bg-grid', {
+    dragulaService.setOptions(this.bagId, {
       moves: function (el, container, handle) {
         return !(handle instanceof SVGElement) && handle.className.indexOf('bg-handle') !== -1;
       }
@@ -188,6 +190,11 @@ export class BootgridComponent implements OnChanges {
     //console.log(this.items);
 
   };
+
+  ngOnInit() {
+
+  }
+
   ngOnChanges(changes:SimpleChanges) {
     //console.log(changes);
     if(changes['items']) {
