@@ -5,6 +5,7 @@ import { ResizableModule } from "angular-resizable-element";
 import { DragulaModule } from "ng2-dragula";
 import { BgContentComponent } from "./components/bg-content.component";
 
+
 @NgModule({
   imports: [
     CommonModule,

@@ -1,6 +1,6 @@
 {
   "name": "angular-bootgrid",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -24,6 +24,9 @@
     "postpublish": "npm run -s clean"
   },
   "private": false,
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "main": "index.js",
   "dependencies": {
     "@angular/animations": "^4.2.4",
