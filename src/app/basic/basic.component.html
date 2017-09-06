@@ -13,12 +13,12 @@
     <ng-template let-item="item">
       <div class="basic-box" [ngClass]="{'bg-handle':myGrid.edit}">
         <div class="row">
-          <h3 class="col-12">Item: {{item.order}}</h3>
-          <div class="col-6">Size xs: {{item.xs}}</div><div class="col-6">Order xs: {{item.xsOrder}}</div>
-          <div class="col-6">Size sm: {{item.sm}}</div><div class="col-6">Order sm: {{item.smOrder}}</div>
-          <div class="col-6">Size md: {{item.md}}</div><div class="col-6">Order md: {{item.mdOrder}}</div>
-          <div class="col-6">Size lg: {{item.lg}}</div><div class="col-6">Order lg: {{item.lgOrder}}</div>
-          <div class="col-6">Size xl: {{item.xl}}</div><div class="col-6">Order xl: {{item.xlOrder}}</div>
+          <h3 class="col-12">Item: {{item.startPosition}}</h3>
+          <div class="col-6">Size xs: {{item.size}}</div><div class="col-6">Order xs: {{item.position}}</div>
+          <div class="col-6">Size sm: {{item.smSize}}</div><div class="col-6">Order sm: {{item.smPosition}}</div>
+          <div class="col-6">Size md: {{item.mdSize}}</div><div class="col-6">Order md: {{item.mdPosition}}</div>
+          <div class="col-6">Size lg: {{item.lgSize}}</div><div class="col-6">Order lg: {{item.lgPosition}}</div>
+          <div class="col-6">Size xl: {{item.xlSize}}</div><div class="col-6">Order xl: {{item.xlPosition}}</div>
         </div>
         <button *ngIf="myGrid.edit" class="btn btn-danger btn-sm float-right mt-3" aria-label="Remove" (click)="myGrid.deleteItem(item);">Remove</button>
       </div>

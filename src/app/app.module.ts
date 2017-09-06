@@ -11,6 +11,8 @@ import { CardComponent } from './card/card.component';
 import { ExamplesComponent } from './examples/examples.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ExemplifyModule } from "angular-exemplify";
+import { FixedSizesComponent } from './fixed-sizes/fixed-sizes.component';
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 
 
@@ -20,7 +22,8 @@ import { ExemplifyModule } from "angular-exemplify";
     RandomWidgetComponent,
     BasicComponent,
     CardComponent,
-    ExamplesComponent
+    ExamplesComponent,
+    FixedSizesComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +31,8 @@ import { ExemplifyModule } from "angular-exemplify";
     HttpModule,
     AppRoutingModule,
     BootgridModule,
-    ExemplifyModule
+    ExemplifyModule,
+    NgbModule.forRoot()
   ],
   providers: [],
   entryComponents: [RandomWidgetComponent],

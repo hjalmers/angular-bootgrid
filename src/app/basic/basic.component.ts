@@ -9,35 +9,52 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 export class BasicComponent implements OnInit {
 
 
-  public items = [{
-    xl: 3,
+  /*public items = [{
+    xlSize: 3,
     componentSelector: 'random-widget',
     extra: 'first',
-    order: 0,
-    xlOrder: 0,
-    mdOrder: 0
+    position: 0,
+    xlPosition: 0,
+    mdPosition: 0
   }, {
-    xl: 3,
+    xlSize: 3,
     componentSelector: 'random-widget',
     extra: 'second',
-    order: 1,
-    xlOrder: 1,
-    mdOrder: 1
+    position: 1,
+    xlPosition: 1,
+    mdPosition: 1
   }, {
-    xl: 3,
+    xlSize: 3,
     componentSelector: 'random-widget',
     extra: 'third',
-    order: 2,
-    xlOrder: 2,
-    mdOrder: 2
+    position: 2,
+    xlPosition: 2,
+    mdPosition: 2
   }, {
-    xl: 3,
+    xlSize: 3,
     componentSelector: 'random-widget',
     extra: 'forth',
-    order: 3,
-    xlOrder: 3,
-    mdOrder: 3
+    position: 3,
+    xlPosition: 3,
+    mdPosition: 3
+  }];*/
+  //public items = [];
+  public items = [{
+    xlSize: 3,
+    componentSelector: 'random-widget',
+    extra: 'first',
+    startPosition: 0,
+    position: 0,
+    mdPosition: 1
+  }, {
+    xlSize: 3,
+    componentSelector: 'random-widget',
+    extra: 'second',
+    startPosition: 1,
+    position: 1,
+    mdPosition: 0
   }];
+
   constructor() { }
 
   ngOnInit() {

@@ -13,7 +13,7 @@
     <ng-template let-item="item" let-index="i">
       <div class="card">
         <div class="card-header" [ngClass]="{'bg-handle':myGrid.edit}">
-          Item {{item.order + 1}} of {{myGrid.items.length}}
+          Item {{item.position + 1}} of {{myGrid.items.length}}
           <button *ngIf="myGrid.edit" type="button" class="close float-right" aria-label="Close" (click)="myGrid.deleteItem(item);">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -21,8 +21,8 @@
         <div class="card-body">
           <form *ngIf="myGrid.edit" class="form-inline mb-2">
             <label class="mr-2"><strong>Size:</strong></label>
-            <span class="btn btn-secondary btn-sm mr-2" (click)="myGrid.shrink(item,myGrid.items, item.order);">Decrease -</span>
-            <span class="btn btn-secondary btn-sm" (click)="myGrid.grow(item,myGrid.items, item.order)">Increase +</span>
+            <span class="btn btn-secondary btn-sm mr-2" (click)="myGrid.shrink(item,myGrid.items, item.position);">Decrease -</span>
+            <span class="btn btn-secondary btn-sm" (click)="myGrid.grow(item,myGrid.items, item.position)">Increase +</span>
           </form>
           <div class="mb-2"><strong>Item properties:</strong><br/>{{item | json}}</div>
           <bg-content [insertedComponent]="item.componentSelector" [availableComponents]="availableComponents"></bg-content>

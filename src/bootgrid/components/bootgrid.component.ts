@@ -1,67 +1,45 @@
 import {
   Component, ChangeDetectorRef, ContentChild, TemplateRef, ViewEncapsulation, Input,
-  SimpleChanges, OnChanges, OnDestroy
+  SimpleChanges, OnChanges, OnDestroy, OnInit
 } from '@angular/core';
 import {DragulaService} from "ng2-dragula";
 import {ResizeEvent} from 'angular-resizable-element';
+import {BootgridItem} from "../interfaces/bootgrid-item";
 
 
 @Component({
   selector: 'bootgrid',
   encapsulation:ViewEncapsulation.None,
   template: `<div class="column-wrapper row" ngClass="{{edit ? 'edit-row':''}}" [dragula]="bagId">
-  <div *ngFor="let item of items; let i = index;" class="mb-4" [attr.data-grid-item-id]="item.order" ngClass="{{'col-' + (!item.xs ? 12:item.xs)}} {{'col-sm-' + (!item.sm ? 0:item.sm)}} {{'col-md-' + (!item.md ? 0:item.md)}} {{'col-lg-' + (!item.lg ? 0:item.lg)}} {{'col-xl-' + (!item.xl ? 0:item.xl)}} {{edit ? 'edit-column':''}}" mwlResizable
-       (resizing)="onResize($event,item)">
-    <ng-template [ngTemplateOutlet]="template" [ngOutletContext]="{
+    <div *ngFor="let item of items; let i = index;" class="mb-4" [attr.data-grid-item-id]="item.id" ngClass="{{'col-' + (!item.size ? 12:item.size)}} {{'col-sm-' + (!item.smSize ? 0:item.smSize)}} {{'col-md-' + (!item.mdSize ? 0:item.mdSize)}} {{'col-lg-' + (!item.lgSize ? 0:item.lgSize)}} {{'col-xl-' + (!item.xlSize ? 0:item.xlSize)}} {{edit ? 'edit-column':''}}" mwlResizable
+         (resizing)="onResize($event,item)">
+      <ng-template [ngTemplateOutlet]="template" [ngOutletContext]="{
         item: item
       }">
-    </ng-template>
-    <div class="bg-resize-handle" mwlResizeHandle [resizeEdges]="{right: true}"></div>
-  </div>
-</div>`
+      </ng-template>
+      <div class="bg-resize-handle" mwlResizeHandle [resizeEdges]="{right: true}"></div>
+    </div>
+  </div>`
 })
-export class BootgridComponent implements OnChanges, OnDestroy {
+export class BootgridComponent implements OnInit, OnChanges, OnDestroy {
   @ContentChild(TemplateRef) template:TemplateRef<any>;
-  @Input() items = [];
+  @Input() items:Array<BootgridItem> = [];
 
   private innerWidth:number = window.innerWidth;
   private currentSize:string;
   public bagId:any;
+  private positionProperties: Array<string> = ['xlPosition','lgPosition','mdPosition','smPosition', 'position'];
 
   constructor(private dragulaService: DragulaService, private cdr: ChangeDetectorRef){
 
-    let getWindow = () => {
-      return window.innerWidth;
-    };
-
-    this.innerWidth = getWindow();
-    this.currentSize = this.getCurrentSize();
-    this.bagId = this.generateId();
-
-    window.onresize = () => {
-      this.innerWidth = getWindow();
-      this.currentSize = this.getCurrentSize();
-      let size = this.items[0][this.currentSize];
-      this.items.sort(this.getOrderForSize(this.currentSize));
-      this.cdr.detectChanges(); //running change detection manually
-    };
-
-    dragulaService.setOptions(this.bagId, {
-      moves: function (el, container, handle) {
-        return !(handle instanceof SVGElement) && handle.className.indexOf('bg-handle') !== -1;
-      }
-    });
-    dragulaService.drop.subscribe((value) => {
-      //console.log(value);
-      this.onDrop(value.slice(1));
-    });
   }
 
   onResize(event: ResizeEvent, item): void {
-    //console.log('Element was resized', event, Math.round((event.rectangle.width/this.innerWidth)*12));
+    console.log('Element was resized', event, Math.round((event.rectangle.width/this.innerWidth)*12));
     let proposedWidth = Math.round((event.rectangle.width/this.innerWidth)*12);
+    const SIZE = this.currentSize === 'xs' ? 'size' :  this.currentSize + 'Size';
     if(proposedWidth < 13){
-      item[this.currentSize] = proposedWidth
+      item[SIZE] = proposedWidth
     }
 
   }
@@ -74,17 +52,17 @@ export class BootgridComponent implements OnChanges, OnDestroy {
   public addItem = function(){
     this.items.push(
       {
-        xl:4,
+        xlSize:4,
         componentSelector:'random-widget',
-        order:this.items.length,
-        xsOrder:this.items.length,
-        smOrder:this.items.length,
-        mdOrder:this.items.length,
-        lgOrder:this.items.length,
-        xlOrder:this.items.length,
+        startPosition:this.items.length,
+        position:this.items.length,
+        // smPosition:this.items.length,
+        // mdPosition:this.items.length,
+        // lgPosition:this.items.length,
+        // xlPosition:this.items.length,
         id:this.generateId()
       });
-    this.items.sort(this.getOrderForSize(this.currentSize));
+    this.items.sort(this.getPositionForSize(this.currentSize, this.items));
   };
 
   public deleteItem = function(item){
@@ -126,7 +104,7 @@ export class BootgridComponent implements OnChanges, OnDestroy {
     let [e, el] = args;
     let index = this.getElementIndex(e);
     //let item = this.items[index];
-    const sizeOrder = this.currentSize +'Order';
+    const sizePosition = this.currentSize === 'xs' ? 'position' : this.currentSize +'Position';
     //const startPos = e.getAttribute('data-org-index');
     console.log(e);
     let id = e.getAttribute('data-grid-item-id');
@@ -135,9 +113,9 @@ export class BootgridComponent implements OnChanges, OnDestroy {
     //console.log(endPos,e.getAttribute('data-index'));
     const gridItem = this.getGridItemById(id);
     console.log(gridItem);
-    //console.log(endPos,gridItem[sizeOrder])
-    this.updateOrder(endPos,gridItem,sizeOrder);
-    //this.items[startPos][sizeOrder] = endPos;
+    //console.log(endPos,gridItem[sizePosition])
+    this.updatePosition(endPos, gridItem, sizePosition);
+    //this.items[startPos][sizePosition] = endPos;
     //console.log(e.getAttribute('data-index'),e.getAttribute('data-org-index'),index, item)
   }
   private getElementIndex(el: any) {
@@ -145,7 +123,8 @@ export class BootgridComponent implements OnChanges, OnDestroy {
     //console.log('index',[].slice.call(el.children).indexOf(el.children[1]));
     return [].slice.call(el.parentElement.children).indexOf(el);
   }
-  private updateOrder = function(newPosition:number,movedItem,size){
+  private updatePosition = function(newPosition:number, movedItem:BootgridItem, size:string) {
+    console.log(newPosition, movedItem, size);
     let oldPosition:number = movedItem[size];
     let increase = newPosition > oldPosition;
     let diff = oldPosition - newPosition;
@@ -193,6 +172,30 @@ export class BootgridComponent implements OnChanges, OnDestroy {
 
   ngOnInit() {
 
+    let getWindow = () => {
+      return window.innerWidth;
+    };
+
+    this.innerWidth = getWindow();
+    this.currentSize = this.getCurrentSize();
+    this.bagId = this.generateId();
+
+    window.onresize = () => {
+      this.innerWidth = getWindow();
+      this.currentSize = this.getCurrentSize();
+      this.items.sort(this.getPositionForSize(this.currentSize, this.items));
+      this.cdr.detectChanges(); //running change detection manually
+    };
+
+    this.dragulaService.setOptions(this.bagId, {
+      moves: function (el, container, handle) {
+        return !(handle instanceof SVGElement) && handle.className.indexOf('bg-handle') !== -1;
+      }
+    });
+    this.dragulaService.drop.subscribe((value) => {
+      //console.log(value);
+      this.onDrop(value.slice(1));
+    });
   }
 
   ngOnChanges(changes:SimpleChanges) {
@@ -210,15 +213,39 @@ export class BootgridComponent implements OnChanges, OnDestroy {
     this.dragulaService.destroy(this.bagId);
   }
 
-  private getOrderForSize(size) {
+  private getPositionForSize(size, items:Array<BootgridItem>) {
+    let positionProperty = size === 'xs' ? 'position' :  size + 'Position';
+
+    // TODO: write recursive function
+    if(!this.isPositionDefined(items, positionProperty)) {
+      positionProperty = this.positionProperties[this.positionProperties.indexOf(positionProperty)+1];
+      if(!this.isPositionDefined(items, positionProperty)) {
+        positionProperty = this.positionProperties[this.positionProperties.indexOf(positionProperty)+1];
+        if(!this.isPositionDefined(items, positionProperty)) {
+          positionProperty = this.positionProperties[this.positionProperties.indexOf(positionProperty)+1];
+          if(!this.isPositionDefined(items, positionProperty)) {
+            positionProperty = this.positionProperties[this.positionProperties.indexOf(positionProperty)+1];
+          }
+        }
+      }
+    }
+
     return (a,b)=> {
-      if (a[size+'Order']  < b[size+'Order'] )
+      if (a[positionProperty]  < b[positionProperty] )
         return -1;
-      if (a[size+'Order']  > b[size+'Order'] )
+      if (a[positionProperty]  > b[positionProperty] )
         return 1;
       return 0;
     };
+
   };
+
+
+  private isPositionDefined (items:Array<BootgridItem>, positionProperty:string): boolean {
+    return items
+        .map(item => item)
+        .filter(item => typeof item[positionProperty] !== 'undefined').length > 0;
+  }
 
   private generateId() {
     let d = new Date().getTime();
@@ -230,11 +257,11 @@ export class BootgridComponent implements OnChanges, OnDestroy {
   }
 
 
-  private getGridItemById = function(id:number) {
+  private getGridItemById = function(id:string) {
     //console.log(id,this.items);
     for (let i = 0; i < this.items.length;i++) {
       //console.log(this.items[i].order);
-      if(this.items[i].order == id) {
+      if(this.items[i].id === id) {
         //console.log('yeah');
         return this.items[i];
       }
