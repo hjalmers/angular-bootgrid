@@ -207,7 +207,7 @@ export class BootgridComponent implements OnChanges, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.dragulaService.destroy('bg-grid');
+    this.dragulaService.destroy(this.bagId);
   }
 
   private getOrderForSize(size) {

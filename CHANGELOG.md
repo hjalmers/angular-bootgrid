@@ -2,6 +2,10 @@ Release History
 ---------------
 ## [Unreleased]
 
+### Fixed
+- Dragula grid is destroyed when bootgrid is destroyed (see issue #5).
+
+
 # [1.0.0-alpha.1] - 2017-05-02
 
 ### Breaking changes
