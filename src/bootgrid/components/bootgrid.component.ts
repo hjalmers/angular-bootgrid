@@ -35,7 +35,7 @@ export class BootgridComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onResize(event: ResizeEvent, item): void {
-    console.log('Element was resized', event, Math.round((event.rectangle.width/this.innerWidth)*12));
+    //console.log('Element was resized', event, Math.round((event.rectangle.width/this.innerWidth)*12));
     let proposedWidth = Math.round((event.rectangle.width/this.innerWidth)*12);
     const SIZE = this.currentSize === 'xs' ? 'size' :  this.currentSize + 'Size';
     if(proposedWidth < 13){
@@ -106,13 +106,13 @@ export class BootgridComponent implements OnInit, OnChanges, OnDestroy {
     //let item = this.items[index];
     const sizePosition = this.currentSize === 'xs' ? 'position' : this.currentSize +'Position';
     //const startPos = e.getAttribute('data-org-index');
-    console.log(e);
+    //console.log(e);
     let id = e.getAttribute('data-grid-item-id');
-    console.log(id);
+    //console.log(id);
     const endPos = index;
     //console.log(endPos,e.getAttribute('data-index'));
     const gridItem = this.getGridItemById(id);
-    console.log(gridItem);
+    //console.log(gridItem);
     //console.log(endPos,gridItem[sizePosition])
     this.updatePosition(endPos, gridItem, sizePosition);
     //this.items[startPos][sizePosition] = endPos;
@@ -124,7 +124,6 @@ export class BootgridComponent implements OnInit, OnChanges, OnDestroy {
     return [].slice.call(el.parentElement.children).indexOf(el);
   }
   private updatePosition = function(newPosition:number, movedItem:BootgridItem, size:string) {
-    console.log(newPosition, movedItem, size);
     let oldPosition:number = movedItem[size];
     let increase = newPosition > oldPosition;
     let diff = oldPosition - newPosition;
@@ -189,7 +188,12 @@ export class BootgridComponent implements OnInit, OnChanges, OnDestroy {
 
     this.dragulaService.setOptions(this.bagId, {
       moves: function (el, container, handle) {
-        return !(handle instanceof SVGElement) && handle.className.indexOf('bg-handle') !== -1;
+        function findAncestor (el, cls) {
+          while ((el = el.parentElement) && !el.classList.contains(cls)) {}
+          return el;
+        }
+        const ANCESTOR = findAncestor(handle, 'bg-handle');
+        return !(handle instanceof SVGElement) && (handle.className.indexOf('bg-handle') !== -1 || ANCESTOR && ANCESTOR.className.indexOf('bg-handle') !== -1);
       }
     });
     this.dragulaService.drop.subscribe((value) => {
