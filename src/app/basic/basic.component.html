@@ -1,4 +1,4 @@
-<div class="mb-4" exemplify="basicExample" [source]="'child'" [angularInputs]="['ngClass']" [navStyle]="'tabs'" [externalSources]="[{
+<div class="mb-4" exemplify="basicExample" [context]="this" [source]="'child'" [escapeStrings]="['ngClass']" [navStyle]="'tabs'" [externalSources]="[{
     name:'app.module.ts',
     src:'https://raw.githubusercontent.com/hjalmers/angular-bootgrid/master/src/app/app.module.ts'
   },{
@@ -10,7 +10,7 @@
   }]">
   <button class="btn btn-secondary mb-4" (click)="myGrid.editLayout()">Edit layout</button>
   <bootgrid #myGrid [items]="items">
-    <template let-item="item">
+    <ng-template let-item="item">
       <div class="basic-box" [ngClass]="{'bg-handle':myGrid.edit}">
         <div class="row">
           <h3 class="col-12">Item: {{item.order}}</h3>
@@ -22,8 +22,7 @@
         </div>
         <button *ngIf="myGrid.edit" class="btn btn-danger btn-sm float-right mt-3" aria-label="Remove" (click)="myGrid.deleteItem(item);">Remove</button>
       </div>
-    </template>
+    </ng-template>
   </bootgrid>
   <button *ngIf="myGrid.edit" class="btn btn-secondary" (click)="myGrid.addItem()">Add content</button>
 </div>
-

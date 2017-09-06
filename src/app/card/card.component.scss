@@ -1,7 +1,8 @@
-@import "node_modules/bootstrap/scss/variables.scss";
+@import "../../../node_modules/bootstrap/scss/_functions.scss";
+@import "../../../node_modules/bootstrap/scss/_variables.scss";
 
 
-.card-block {
+.card-body {
   height:260px;
   overflow: auto;
 }

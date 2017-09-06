@@ -1,6 +1,6 @@
 import {
   Component, ChangeDetectorRef, ContentChild, TemplateRef, ViewEncapsulation, Input,
-  SimpleChanges, OnChanges
+  SimpleChanges, OnChanges, OnDestroy
 } from '@angular/core';
 import {DragulaService} from "ng2-dragula";
 import {ResizeEvent} from 'angular-resizable-element';
@@ -12,15 +12,15 @@ import {ResizeEvent} from 'angular-resizable-element';
   template: `<div class="column-wrapper row" ngClass="{{edit ? 'edit-row':''}}" [dragula]="'bg-grid'">
   <div *ngFor="let item of items; let i = index;" class="mb-4" [attr.data-grid-item-id]="item.order" ngClass="{{'col-' + (!item.xs ? 12:item.xs)}} {{'col-sm-' + (!item.sm ? 0:item.sm)}} {{'col-md-' + (!item.md ? 0:item.md)}} {{'col-lg-' + (!item.lg ? 0:item.lg)}} {{'col-xl-' + (!item.xl ? 0:item.xl)}} {{edit ? 'edit-column':''}}" mwlResizable
        (resizing)="onResize($event,item)">
-    <template [ngTemplateOutlet]="template" [ngOutletContext]="{
+    <ng-template [ngTemplateOutlet]="template" [ngOutletContext]="{
         item: item
       }">
-    </template>
+    </ng-template>
     <div class="bg-resize-handle" mwlResizeHandle [resizeEdges]="{right: true}"></div>
   </div>
 </div>`
 })
-export class BootgridComponent implements OnChanges {
+export class BootgridComponent implements OnChanges, OnDestroy {
   @ContentChild(TemplateRef) template:TemplateRef<any>;
   @Input() items = [];
 
@@ -197,8 +197,12 @@ export class BootgridComponent implements OnChanges {
         }
       }
     }
-
   }
+
+  ngOnDestroy() {
+    this.dragulaService.destroy('bg-grid');
+  }
+
   private getOrderForSize(size) {
     return (a,b)=> {
       if (a[size+'Order']  < b[size+'Order'] )
