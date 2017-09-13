@@ -1,26 +1,47 @@
 <div class="row">
   <div class="col">
     <div ngbDropdown class="d-inline-block">
-      <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Toggle dropdown</button>
+      <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Add widget</button>
       <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-        <button class="dropdown-item">Action - 1</button>
-        <button class="dropdown-item">Another Action</button>
-        <button class="dropdown-item">Something else is here</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="col text-right">
-    <div ngbDropdown placement="top-right" class="d-inline-block">
-      <button class="btn btn-outline-primary" id="dropdownBasic2" ngbDropdownToggle>Toggle dropup</button>
-      <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
-        <button class="dropdown-item">Action - 1</button>
-        <button class="dropdown-item">Another Action</button>
-        <button class="dropdown-item">Something else is here</button>
+        <button class="dropdown-item" (click)="myGrid.addItem(items[0])">Table</button>
+        <button class="dropdown-item" (click)="myGrid.addItem(items[1])">Chart</button>
       </div>
     </div>
   </div>
 </div>
-<bootgrid>
-
+<bootgrid #myGrid [items]="items">
+  <ng-template let-item="item">
+    <div class="card grid-item {{'grid-item-'+item.itemSize}} {{item.fs ? 'full-screen':''}}">
+      <div class="card-header">
+        <div class="row no-gutters">
+        <div class="col"><h4 class="mb-0 bg-handle">Featured</h4></div>
+        <div class="col-auto" ngbDropdown [placement]="'bottom-right'" *ngIf="!item.fs">
+          <i ngbDropdownToggle class="fa fa-bars"></i>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <h6 class="dropdown-header">Size</h6>
+            <button class="dropdown-item" [ngClass]="{'active':item.size === 'sm'}" (click)="setSize(item, 'sm');myGrid.resize();">Small</button>
+            <button class="dropdown-item" [ngClass]="{'active':item.size === 'md'}" (click)="setSize(item, 'md');myGrid.resize();">Medium</button>
+            <button class="dropdown-item" [ngClass]="{'active':item.size === 'lg'}" (click)="setSize(item, 'lg');myGrid.resize();">Large</button>
+            <button class="dropdown-item" [ngClass]="{'active':item.size === 'fs'}" (click)="setSize(item, 'fs');myGrid.resize();">Full screen</button>
+          </div>
+        </div>
+        <i class="fa fa-close" *ngIf="item.fs" (click)="item.fs = false"></i>
+        </div>
+      </div>
+      <div class="card-body">
+        <bg-content class="d-block" [insertedComponent]="item.componentSelector" [availableComponents]="availableComponents"></bg-content>
+      </div>
+    </div>
+    <!--<div class="basic-box" [ngClass]="{'bg-handle':myGrid.edit}">
+      <div class="row">
+        <h3 class="col-12">Item: {{item.startPosition}}</h3>
+        <div class="col-6">Size xs: {{item.size}}</div><div class="col-6">Order xs: {{item.position}}</div>
+        <div class="col-6">Size sm: {{item.smSize}}</div><div class="col-6">Order sm: {{item.smPosition}}</div>
+        <div class="col-6">Size md: {{item.mdSize}}</div><div class="col-6">Order md: {{item.mdPosition}}</div>
+        <div class="col-6">Size lg: {{item.lgSize}}</div><div class="col-6">Order lg: {{item.lgPosition}}</div>
+        <div class="col-6">Size xl: {{item.xlSize}}</div><div class="col-6">Order xl: {{item.xlPosition}}</div>
+      </div>
+      <button *ngIf="myGrid.edit" class="btn btn-danger btn-sm float-right mt-3" aria-label="Remove" (click)="myGrid.deleteItem(item);">Remove</button>
+    </div>-->
+  </ng-template>
 </bootgrid>

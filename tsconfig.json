@@ -14,6 +14,9 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "paths": {
+      "highcharts": ["../node_modules/highcharts/js/highcharts.js"]
+    }
   }
 }

@@ -4,6 +4,7 @@ import { BootgridComponent } from './components/bootgrid.component';
 import { ResizableModule } from "angular-resizable-element";
 import { DragulaModule } from "ng2-dragula";
 import { BgContentComponent } from "./components/bg-content.component";
+import { GroupItemsPipe } from "./pipes/group-items.pipe";
 
 
 @NgModule({
@@ -12,7 +13,13 @@ import { BgContentComponent } from "./components/bg-content.component";
     DragulaModule,
     ResizableModule
   ],
-  declarations: [BootgridComponent, BgContentComponent],
-  exports: [BootgridComponent,BgContentComponent]
+  declarations: [
+    BootgridComponent,
+    BgContentComponent,
+    GroupItemsPipe],
+  exports: [
+    BootgridComponent,
+    BgContentComponent
+  ]
 })
 export class BootgridModule { }

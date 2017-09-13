@@ -13,7 +13,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { ExemplifyModule } from "angular-exemplify";
 import { FixedSizesComponent } from './fixed-sizes/fixed-sizes.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-
+import { WidgetTableComponent } from './widget-table/widget-table.component';
+import {GenericTableModule} from "@angular-generic-table/core";
+import * as highcharts from 'highcharts';
+import {HighchartsStatic} from "angular2-highcharts/dist/HighchartsService";
+import { WidgetChartComponent } from './widget-chart/widget-chart.component';
+import {ChartModule} from "angular2-highcharts";
+export function highchartsFactory() {
+  return highcharts;
+}
 
 
 @NgModule({
@@ -23,7 +31,9 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     BasicComponent,
     CardComponent,
     ExamplesComponent,
-    FixedSizesComponent
+    FixedSizesComponent,
+    WidgetTableComponent,
+    WidgetChartComponent
   ],
   imports: [
     BrowserModule,
@@ -32,10 +42,21 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     AppRoutingModule,
     BootgridModule,
     ExemplifyModule,
+    GenericTableModule,
+    ChartModule,
     NgbModule.forRoot()
   ],
-  providers: [],
-  entryComponents: [RandomWidgetComponent],
+  providers: [
+    {
+      provide: HighchartsStatic,
+      useFactory: highchartsFactory,
+    }
+  ],
+  entryComponents: [
+    RandomWidgetComponent,
+    WidgetTableComponent,
+    WidgetChartComponent
+  ],
   exports: [],
   bootstrap: [AppComponent]
 })

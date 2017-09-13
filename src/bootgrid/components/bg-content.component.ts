@@ -5,7 +5,7 @@ import {
 
 @Component({
   selector: 'bg-content',
-  template: '<b>Inserted Component:</b>'
+  template: '<!--<b>Inserted Component:</b>-->'
 })
 export class BgContentComponent implements OnChanges {
   @Input() insertedComponent: Type<any>;

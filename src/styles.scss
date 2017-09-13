@@ -3,3 +3,37 @@
 
 // bootgrid base styles
 @import "bootgrid/bootgrid";
+
+@import "highcharts-default";
+
+app-widget-chart {
+  display: block;
+  height: 100%;
+  position: relative;
+  > chart {
+    height:100%;
+  }
+}
+
+.grid-item-sm + .grid-item-sm + .grid-item-sm {
+  //margin-top: 2rem;
+}
+
+.nested {
+ > [class*="-3"] {
+   min-width: 25vw;
+ }
+
+  // only apply when cell uses 50%
+  > div:first-of-type {
+    //margin-bottom: 2rem;
+  }
+  // only apply when cell uses 50%
+  > div:nth-of-type(5) {
+    //margin-top: 2rem;
+  }
+}
+
+.col-md-6 + .col-md-6 .col-sm, .col-md-6 + .col-sm {
+  //background: red;
+}

@@ -1,0 +1,26 @@
+.grid-item {
+  height:400px;
+  //height:auto;
+  &.grid-item-sm {
+    height:calc(200px - 1rem);
+  }
+  &.grid-item-lg {
+    height:auto;
+  }
+}
+
+.full-screen {
+  width: calc(100vw - 30px);
+  height: calc(100vh - 30px);
+  position: fixed;
+  z-index: 1;
+  top: 15px;
+  left: 15px;
+}
+
+.card-body {
+  overflow: auto;
+  position: relative;
+  height: 100%;
+}
+

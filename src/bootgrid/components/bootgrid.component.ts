@@ -11,14 +11,38 @@ import {BootgridItem} from "../interfaces/bootgrid-item";
   selector: 'bootgrid',
   encapsulation:ViewEncapsulation.None,
   template: `<div class="column-wrapper row" ngClass="{{edit ? 'edit-row':''}}" [dragula]="bagId">
-    <div *ngFor="let item of items; let i = index;" class="mb-4" [attr.data-grid-item-id]="item.id" ngClass="{{'col-' + (!item.size ? 12:item.size)}} {{'col-sm-' + (!item.smSize ? 0:item.smSize)}} {{'col-md-' + (!item.mdSize ? 0:item.mdSize)}} {{'col-lg-' + (!item.lgSize ? 0:item.lgSize)}} {{'col-xl-' + (!item.xlSize ? 0:item.xlSize)}} {{edit ? 'edit-column':''}}" mwlResizable
-         (resizing)="onResize($event,item)">
-      <ng-template [ngTemplateOutlet]="template" [ngOutletContext]="{
+    <ng-container *ngFor="let item of items | groupItems; let i = index;">
+      <div *ngIf="!item.grouped" class="my-3" [attr.data-grid-item-id]="item.id" ngClass="{{'col-' + (!item.size ? 12:item.size)}} {{!item.smSize ? '':'col-sm-'+item.smSize}} {{!item.mdSize ? '':'col-md-'+item.mdSize}} {{!item.lgSize ? '':'col-lg-'+item.lgSize}} {{!item.xlSize ? '':'col-xl-'+item.xlSize}} {{edit ? 'edit-column':''}}" mwlResizable
+           (resizing)="onResize($event,item)">
+        <ng-template [ngTemplateOutlet]="template" [ngOutletContext]="{
         item: item
       }">
-      </ng-template>
-      <div class="bg-resize-handle" mwlResizeHandle [resizeEdges]="{right: true}"></div>
-    </div>
+        </ng-template>
+        <div class="bg-resize-handle" mwlResizeHandle [resizeEdges]="{right: true}"></div>
+      </div>
+      <div *ngIf="item.grouped && item.items.length > 1" class="my-3 col-12 col-sm">
+        <div class="row nested">
+        <!--<div *ngFor="let item of item.items; let i = index;" [attr.data-grid-item-id]="item.id" ngClass="{{'grid-item-'+item.itemSize}} {{'col-' + (!item.size ? 12:item.size)}} {{!item.smSize ? '':'col-sm-'+(item.smSize*2 > 12 ? 12: item.smSize*2) }} {{!item.mdSize ? '':'col-md-'+(item.mdSize*2 > 12 ? 12:item.mdSize*2)}} {{!item.lgSize ? '':'col-lg-'+(item.lgSize*2 > 12 ? 12:item.lgSize*2)}} {{!item.xlSize ? '':'col-xl-'+(item.xlSize*2 > 12 ? 12:item.xlSize*2)}} {{edit ? 'edit-column':''}}" mwlResizable -->
+        <div *ngFor="let item of item.items; let i = index;" [attr.data-grid-item-id]="item.id" ngClass="{{'grid-item-'+item.itemSize}} {{'col-' + item.size}} {{!item.smSize ? '':'col-sm-'+item.smSize }} {{!item.mdSize ? '':'col-md-'+item.mdSize}} {{!item.lgSize ? '':'col-lg-'+item.lgSize}} {{!item.xlSize ? '':'col-xl-'+item.xlSize}} {{edit ? 'edit-column':''}}" mwlResizable
+             (resizing)="onResize($event,item)">
+          <ng-template [ngTemplateOutlet]="template" [ngOutletContext]="{
+        item: item
+      }">
+          </ng-template>
+          <div class="bg-resize-handle" mwlResizeHandle [resizeEdges]="{right: true}"></div>
+        </div>
+        </div>
+      </div>
+      <!--<div *ngIf="item.grouped && item.items.length === 1" class="mb-4" [attr.data-grid-item-id]="item.id" ngClass="{{'col-' + (!item.items[0].size ? 12:item.items[0].size)}} {{!item.items[0].smSize ? '':'col-sm-'+item.items[0].smSize}} {{!item.items[0].mdSize ? '':'col-md-'+item.items[0].mdSize}} {{!item.items[0].lgSize ? '':'col-lg-'+item.items[0].lgSize}} {{!item.items[0].xlSize ? '':'col-xl-'+item.items[0].xlSize}} {{edit ? 'edit-column':''}}" mwlResizable
+           (resizing)="onResize($event,item)">
+        <ng-template [ngTemplateOutlet]="template" [ngOutletContext]="{
+        item: item.items[0]
+      }">
+        </ng-template>
+        {{item.group}}
+        <div class="bg-resize-handle" mwlResizeHandle [resizeEdges]="{right: true}"></div>
+      </div>-->
+    </ng-container>
   </div>`
 })
 export class BootgridComponent implements OnInit, OnChanges, OnDestroy {
@@ -49,19 +73,26 @@ export class BootgridComponent implements OnInit, OnChanges, OnDestroy {
     this.edit = !this.edit;
   };
 
-  public addItem = function(){
-    this.items.push(
-      {
-        xlSize:4,
-        componentSelector:'random-widget',
-        startPosition:this.items.length,
-        position:this.items.length,
-        // smPosition:this.items.length,
-        // mdPosition:this.items.length,
-        // lgPosition:this.items.length,
-        // xlPosition:this.items.length,
-        id:this.generateId()
-      });
+  public addItem = function(item?:any){
+    if(item){
+      item = {...item};
+      item.id = this.generateId();
+      this.items.push(item);
+    } else {
+      this.items.push(
+        {
+          xlSize: 4,
+          componentSelector: 'random-widget',
+          startPosition: this.items.length,
+          position: this.items.length,
+          // smPosition:this.items.length,
+          // mdPosition:this.items.length,
+          // lgPosition:this.items.length,
+          // xlPosition:this.items.length,
+          id: this.generateId()
+        });
+    }
+    this.items = [...this.items];
     this.items.sort(this.getPositionForSize(this.currentSize, this.items));
   };
 
@@ -72,6 +103,10 @@ export class BootgridComponent implements OnInit, OnChanges, OnDestroy {
       }
     }
   };
+
+  public resize() {
+    this.items = [...this.items];
+  }
 
   public grow = function(item){
     if(!item[this.currentSize] || item[this.currentSize] < 12){
@@ -166,6 +201,9 @@ export class BootgridComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     //console.log(this.items);
+
+    this.items.sort(this.getPositionForSize(this.currentSize, this.items));
+    this.items = [...this.items]
 
   };
 
