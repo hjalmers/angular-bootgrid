@@ -1,10 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+
+//$border-radius: 0;
 @import "~bootstrap/scss/bootstrap.scss";
 
 // bootgrid base styles
 @import "bootgrid/bootgrid";
 
 @import "highcharts-default";
+
 
 app-widget-chart {
   display: block;
@@ -18,22 +21,41 @@ app-widget-chart {
 .grid-item-sm + .grid-item-sm + .grid-item-sm {
   //margin-top: 2rem;
 }
+.full .nested {
+  > [class*="-3"] {
+    min-width: 0;
+  }
+}
 
 .nested {
  > [class*="-3"] {
-   min-width: 25vw;
+   min-width: 50%;
+   flex: 0 0 50%;
  }
 
   // only apply when cell uses 50%
-  > div:first-of-type {
-    //margin-bottom: 2rem;
-  }
-  // only apply when cell uses 50%
-  > div:nth-of-type(5) {
-    //margin-top: 2rem;
+  &.half {
+    > div:first-of-type {
+      margin-bottom: 2rem;
+    }
+    // only apply when cell uses 50%
+    > div:nth-of-type(5) {
+      margin-top: 2rem;
+    }
   }
 }
 
 .col-md-6 + .col-md-6 .col-sm, .col-md-6 + .col-sm {
   //background: red;
+}
+
+
+.row.nested.full > [class*="-3"] {
+  min-width: 25%;
+}
+
+.auto-height {
+  .grid-item.grid-item-lg{
+    height:auto;
+  }
 }

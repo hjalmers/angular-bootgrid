@@ -2,15 +2,20 @@ Release History
 ---------------
 ## [Unreleased]
 
+# [1.0.0-alpha.2] - 2017-09-27
+
 ### Breaking changes
 - Bootgrid item properties have changed, e.g. `xs` has been changed to `size`, `sm` to `smSize`, `xsOrder` to `position`, `smOrder` to `smPosition` etc. to conform with bootstrap dropping `xs` from names. `size` and `position` are used by default for all screen sizes unless something else is specified for a given breakpoint. 
 
 ### Fixed
 - Dragula grid is destroyed when bootgrid is destroyed (see issue #5).
-- Grid uses next available position when sorting (see issue #7).
+- ~~Grid uses next available position when sorting (see issue #7).~~ (temporary disabled in favour for other feature)
 - Bootgrid item id generation.
+- ~~Accept children when moving grid item (see issue #9).~~ (temporary disabled in favour for other feature)
+
+### Added
 - Added interface for bootgrid item.
-- Accept children when moving grid item (see issue #9).
+- Ability to use fixed sizes using size rules.
 
 
 # [1.0.0-alpha.1] - 2017-05-02

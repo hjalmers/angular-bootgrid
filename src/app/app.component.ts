@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   innerWidth:number = window.innerWidth;
   currentSize:string;
-  onResize(event){
+  onResize(event:any){
     this.innerWidth = event.target.innerWidth; // window width
     this.currentSize = this.getCurrentSize();
   }
