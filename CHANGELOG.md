@@ -2,6 +2,10 @@ Release History
 ---------------
 ## [Unreleased]
 
+# [1.0.0-alpha.3] - 2017-09-28
+### Fixed
+- Bg-item class was not exported correctly.
+
 # [1.0.0-alpha.2] - 2017-09-27
 
 ### Breaking changes
